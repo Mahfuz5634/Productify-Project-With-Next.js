@@ -9,7 +9,9 @@ export default async function EventsPage() {
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-2">Upcoming Events</h1>
-      <p className="mb-6 text-gray-600">Find events by category or search below.</p>
+      <p className="mb-6 text-gray-600">
+        Find events by category or search below.
+      </p>
 
       {/* Search bar (UI only) */}
       <input
@@ -40,7 +42,7 @@ export default async function EventsPage() {
 
             {/* Short description */}
             <p className="text-gray-600 mb-2">
-              {evt.shortDescription.length > 60
+              {evt.shortDescription?.length > 60
                 ? evt.shortDescription.slice(0, 60) + "..."
                 : evt.shortDescription}
             </p>

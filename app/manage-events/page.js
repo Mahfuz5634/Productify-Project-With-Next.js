@@ -20,7 +20,7 @@ export default function ManageEvents() {
   // Load events
   useEffect(() => {
     async function fetchEvents() {
-      const res = await fetch("/api/events");
+      const res = await fetch("/api/products");
       const data = await res.json();
       setEvents(data);
     }
