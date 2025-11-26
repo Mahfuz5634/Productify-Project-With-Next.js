@@ -19,7 +19,6 @@ const AddProductPage = () => {
     image: "",
   });
 
-  // Redirect if not logged in
   useEffect(() => {
     if (!loading && !user) {
       router.push("/login");
@@ -65,87 +64,131 @@ const AddProductPage = () => {
     }
   };
 
-  if (loading || !user) return <div className="p-10 text-center">Loading...</div>;
+  if (loading || !user)
+    return <div className="p-10 text-center">Loading...</div>;
 
   return (
-    <div className="max-w-3xl mx-auto py-10">
-      <h1 className="text-3xl font-bold mb-6">Add Product</h1>
+    <div className="max-w-3xl mx-auto py-12 px-4">
+      <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">
+        Add New Product
+      </h1>
 
       <form
         onSubmit={handleSubmit}
-        className="space-y-5 bg-white p-6 shadow rounded-md"
+        className="space-y-5 bg-white p-8 shadow-xl rounded-xl border border-gray-200"
       >
-        <input
-          name="title"
-          placeholder="Title"
-          value={form.title}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-          required
-        />
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="flex flex-col">
+            <label className="text-sm mb-1 font-medium text-gray-600">
+              Product Title
+            </label>
+            <input
+              name="title"
+              placeholder="Product Title"
+              value={form.title}
+              onChange={handleChange}
+              className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              required
+            />
+          </div>
 
-        <input
-          name="shortDesc"
-          placeholder="Short Description"
-          value={form.shortDesc}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-          required
-        />
+          <div className="flex flex-col">
+            <label className="text-sm mb-1 font-medium text-gray-600">
+              Price
+            </label>
+            <input
+              name="price"
+              type="number"
+              placeholder="Price"
+              value={form.price}
+              onChange={handleChange}
+              className="border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              required
+            />
+          </div>
+        </div>
 
-        <textarea
-          name="fullDesc"
-          placeholder="Full Description"
-          value={form.fullDesc}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-          rows={4}
-          required
-        />
+        <div>
+          <label className="text-sm mb-1 font-medium text-gray-600">
+            Short Description
+          </label>
+          <input
+            name="shortDesc"
+            placeholder="Short Description"
+            value={form.shortDesc}
+            onChange={handleChange}
+            className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            required
+          />
+        </div>
 
-        <input
-          name="price"
-          type="number"
-          placeholder="Price"
-          value={form.price}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-          required
-        />
+        <div>
+          <label className="text-sm mb-1 font-medium text-gray-600">
+            Full Description
+          </label>
+          <textarea
+            name="fullDesc"
+            placeholder="Full Description"
+            value={form.fullDesc}
+            onChange={handleChange}
+            className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            rows={4}
+            required
+          />
+        </div>
 
-        <input
-          name="date"
-          type="date"
-          value={form.date}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
+        {/* Grid row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label className="text-sm mb-1 font-medium text-gray-600">
+              Date
+            </label>
+            <input
+              name="date"
+              type="date"
+              value={form.date}
+              onChange={handleChange}
+              className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
 
-        <select
-          name="priority"
-          value={form.priority}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        >
-          <option value="">Select Priority</option>
-          <option value="Low">Low</option>
-          <option value="Normal">Normal</option>
-          <option value="High">High</option>
-        </select>
+          <div>
+            <label className="text-sm mb-1 font-medium text-gray-600">
+              Priority
+            </label>
+            <select
+              name="priority"
+              value={form.priority}
+              onChange={handleChange}
+              className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            >
+              <option value="">Select Priority</option>
+              <option value="Low">Low</option>
+              <option value="Normal">Normal</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+        </div>
 
-        <input
-          name="image"
-          placeholder="Optional Image URL"
-          value={form.image}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
+        <div>
+          <label className="text-sm mb-1 font-medium text-gray-600">
+            Product Image URL
+          </label>
+          <input
+            name="image"
+            placeholder="Optional Image URL"
+            value={form.image}
+            onChange={handleChange}
+            className="w-full border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+        </div>
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition"
         >
-          Submit
+          Submit Product
         </button>
       </form>
     </div>

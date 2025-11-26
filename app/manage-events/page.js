@@ -10,14 +10,12 @@ export default function ManageEvents() {
 
   const [events, setEvents] = useState([]);
 
-  // Redirect if not logged in
   useEffect(() => {
     if (!loading && !user) {
       router.push("/login");
     }
   }, [user, loading, router]);
 
-  // Load events
   useEffect(() => {
     async function fetchEvents() {
       const res = await fetch("/api/products");
@@ -31,53 +29,77 @@ export default function ManageEvents() {
     return <div className="p-10 text-center">Loading...</div>;
 
   return (
-    <div className="max-w-6xl mx-auto py-10">
-      <h1 className="text-3xl font-bold mb-6">Manage Events</h1>
+    <div className="max-w-6xl mx-auto py-12 px-4">
+      <h1 className="text-4xl font-bold mb-8 text-gray-800 text-center">
+        Manage Events
+      </h1>
 
-      <div className="overflow-x-auto shadow-md rounded-lg bg-white">
-        <table className="w-full border-collapse">
+      <div className="overflow-x-auto shadow-xl border rounded-xl bg-white">
+        <table className="w-full text-left">
           <thead className="bg-gray-100">
             <tr>
-              <th className="p-3 border text-left">Title</th>
-              <th className="p-3 border text-left">Date</th>
-              <th className="p-3 border text-left">Venue</th>
-              <th className="p-3 border text-center">Price</th>
-              <th className="p-3 border text-center">Priority</th>
-              <th className="p-3 border text-center">Actions</th>
+              <th className="p-4 border-b font-semibold">Title</th>
+              <th className="p-4 border-b font-semibold">Date</th>
+              <th className="p-4 border-b font-semibold">Venue</th>
+              <th className="p-4 border-b font-semibold text-center">Price</th>
+              <th className="p-4 border-b font-semibold text-center">Priority</th>
+              <th className="p-4 border-b font-semibold text-center">Actions</th>
             </tr>
           </thead>
 
           <tbody>
             {events.length === 0 && (
               <tr>
-                <td colSpan="6" className="p-5 text-center text-gray-500">
-                  No events found
+                <td colSpan="6" className="p-6 text-center text-gray-500">
+                  No events available
                 </td>
               </tr>
             )}
 
             {events.map((ev) => (
-              <tr key={ev._id} className="border-b hover:bg-gray-50">
-                <td className="p-3 border">{ev.title}</td>
+              <tr
+                key={ev._id}
+                className="hover:bg-gray-50 transition border-b"
+              >
+                <td className="p-4">{ev.title}</td>
 
-                <td className="p-3 border">
-                  {ev.date ? ev.date : "N/A"} {ev.time ? `(${ev.time})` : ""}
+                <td className="p-4">
+                  {ev.date ? ev.date : "N/A"}{" "}
+                  {ev.time ? <span className="text-gray-500">({ev.time})</span> : ""}
                 </td>
 
-                <td className="p-3 border">{ev.venue || "N/A"}</td>
+                <td className="p-4">{ev.venue || "N/A"}</td>
 
-                <td className="p-3 border text-center">
-                  {ev.price ? `${ev.price} ${ev.currency}` : "Free"}
+                <td className="p-4 text-center">
+                  {ev.price ? (
+                    <span className="font-medium">
+                      {ev.price} {ev.currency}
+                    </span>
+                  ) : (
+                    <span className="text-green-600 font-semibold">Free</span>
+                  )}
                 </td>
 
-                <td className="p-3 border text-center">{ev.priority}</td>
+                <td className="p-4 text-center">
+                  <span
+                    className={`px-3 py-1 rounded-full text-white text-sm ${
+                      ev.priority === "High"
+                        ? "bg-red-500"
+                        : ev.priority === "Normal"
+                        ? "bg-blue-500"
+                        : "bg-gray-500"
+                    }`}
+                  >
+                    {ev.priority || "N/A"}
+                  </span>
+                </td>
 
-                <td className="p-3 border text-center">
-                  <div className="flex justify-center gap-2">
-                    <button className="px-3 py-1 bg-blue-600 text-white rounded">
+                <td className="p-4 text-center">
+                  <div className="flex justify-center gap-3">
+                    <button className="px-4 py-1.5 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
                       View
                     </button>
-                    <button className="px-3 py-1 bg-red-500 text-white rounded">
+                    <button className="px-4 py-1.5 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition">
                       Delete
                     </button>
                   </div>

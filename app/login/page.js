@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { loginUser, googleLogin } from "@/lib/auth";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 
 export default function Login() {
   const router = useRouter();
@@ -16,66 +19,100 @@ export default function Login() {
 
     try {
       await loginUser(email, password);
-      router.push("/");
+      toast.success("Logged in successfully!");
+
+      setTimeout(() => router.push("/"), 800);
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message || "Login failed");
     }
+
     setLoading(false);
   };
 
   const handleGoogle = async () => {
     try {
       await googleLogin();
-      router.push("/");
+      toast.success("Logged in with Google!");
+
+      setTimeout(() => router.push("/dashboard"), 800);
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message || "Google login failed");
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen 
+      bg-gradient-to-br from-blue-900 via-black to-gray-900 rounded-xl md:my-10 p-6">
+
       <form
         onSubmit={handleLogin}
-        className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md"
+        className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl 
+        w-full max-w-md border border-white/10"
       >
-        <h1 className="text-3xl font-bold mb-6 text-center">Login</h1>
+        <h1 className="text-4xl font-extrabold text-white text-center mb-2">
+          Welcome Back
+        </h1>
+        <p className="text-gray-300 text-center mb-6">
+          Login to your account
+        </p>
 
-        <input
-          type="email"
-          placeholder="Email"
-          className="border p-3 w-full mb-3 rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        {/* Email */}
+        <div className="relative mb-4">
+          <FaEnvelope className="absolute left-3 top-4 text-gray-300" />
+          <input
+            type="email"
+            placeholder="Email Address"
+            className="pl-10 border border-gray-400/30 bg-white/20 text-white 
+            p-3 w-full rounded placeholder-gray-300 focus:outline-none 
+            focus:border-blue-400 transition"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="border p-3 w-full mb-4 rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        {/* Password */}
+        <div className="relative mb-5">
+          <FaLock className="absolute left-3 top-4 text-gray-300" />
+          <input
+            type="password"
+            placeholder="Password"
+            className="pl-10 border border-gray-400/30 bg-white/20 text-white 
+            p-3 w-full rounded placeholder-gray-300 focus:outline-none
+            focus:border-blue-400 transition"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
 
+        {/* Login Button */}
         <button
-          className="bg-blue-600 text-white py-2 rounded w-full mb-3"
+          className="bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-lg 
+          w-full font-semibold transition active:scale-95 shadow-lg mb-4"
           disabled={loading}
         >
           {loading ? "Logging in..." : "Login"}
         </button>
 
+        {/* Google Login */}
         <button
           type="button"
           onClick={handleGoogle}
-          className="bg-red-500 text-white py-2 rounded w-full"
+          className="flex items-center justify-center gap-2 bg-white 
+          text-black py-3 rounded-lg w-full font-semibold shadow-md
+          hover:bg-gray-100 transition active:scale-95"
         >
+          <FcGoogle className="text-2xl" />
           Login with Google
         </button>
 
-        <p className="text-center mt-4">
-          Don’t have an account?{" "}
-          <a href="/register" className="text-blue-600 font-semibold">
+        <p className="text-center mt-6 text-gray-300">
+          Don't have an account?{" "}
+          <a
+            href="/register"
+            className="text-blue-300 font-semibold hover:underline"
+          >
             Register
           </a>
         </p>

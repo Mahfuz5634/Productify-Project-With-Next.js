@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { registerUser, googleLogin } from "@/lib/auth";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
+import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 
 export default function Register() {
   const router = useRouter();
@@ -17,9 +20,11 @@ export default function Register() {
 
     try {
       await registerUser(name, email, password);
-      router.push("/");
+      toast.success("Account created successfully!");
+
+      setTimeout(() => router.push("/"), 800);
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message || "Registration failed");
     }
 
     setLoading(false);
@@ -28,55 +33,79 @@ export default function Register() {
   const handleGoogle = async () => {
     try {
       await googleLogin();
-      router.push("/");
+      toast.success("Logged in with Google!");
+
+      setTimeout(() => router.push("/"), 800);
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message || "Google login failed");
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen 
+      bg-gradient-to-br from-blue-900 via-black to-gray-900  rounded-xl md:my-10 p-6">
+
       <form
         onSubmit={handleRegister}
-        className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md"
+        className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl 
+        w-full max-w-md border border-white/10"
       >
-        <h1 className="text-3xl font-bold mb-6 text-center">
+        <h1 className="text-4xl font-extrabold text-white text-center mb-2">
           Create Account
         </h1>
+        <p className="text-gray-300 text-center mb-6">
+          Join Productify and start your event journey 🚀
+        </p>
 
         {/* Name */}
-        <input
-          type="text"
-          placeholder="Full Name"
-          className="border p-3 w-full mb-3 rounded"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+        <div className="relative mb-4">
+          <FaUser className="absolute left-3 top-4 text-gray-300" />
+          <input
+            type="text"
+            placeholder="Full Name"
+            className="pl-10 border border-gray-400/30 bg-white/20 text-white 
+            p-3 w-full rounded placeholder-gray-300 focus:outline-none 
+            focus:border-blue-400 transition"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
 
         {/* Email */}
-        <input
-          type="email"
-          placeholder="Email"
-          className="border p-3 w-full mb-3 rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <div className="relative mb-4">
+          <FaEnvelope className="absolute left-3 top-4 text-gray-300" />
+          <input
+            type="email"
+            placeholder="Email Address"
+            className="pl-10 border border-gray-400/30 bg-white/20 text-white
+            p-3 w-full rounded placeholder-gray-300 focus:outline-none 
+            focus:border-blue-400 transition"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
 
         {/* Password */}
-        <input
-          type="password"
-          placeholder="Password"
-          className="border p-3 w-full mb-4 rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <div className="relative mb-5">
+          <FaLock className="absolute left-3 top-4 text-gray-300" />
+          <input
+            type="password"
+            placeholder="Password"
+            className="pl-10 border border-gray-400/30 bg-white/20 text-white 
+            p-3 w-full rounded placeholder-gray-300 focus:outline-none
+            focus:border-blue-400 transition"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
 
         {/* Register Button */}
         <button
-          className="bg-blue-600 text-white py-2 rounded w-full mb-3"
+          className="bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-lg 
+          w-full font-semibold transition active:scale-95 shadow-lg mb-4"
           disabled={loading}
         >
           {loading ? "Creating account..." : "Register"}
@@ -86,14 +115,20 @@ export default function Register() {
         <button
           type="button"
           onClick={handleGoogle}
-          className="bg-red-500 text-white py-2 rounded w-full"
+          className="flex items-center justify-center gap-2 bg-white 
+          text-black py-3 rounded-lg w-full font-semibold shadow-md
+          hover:bg-gray-100 transition active:scale-95"
         >
+          <FcGoogle className="text-2xl" />
           Sign up with Google
         </button>
 
-        <p className="text-center mt-4">
+        <p className="text-center mt-6 text-gray-300">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-600 font-semibold">
+          <a
+            href="/login"
+            className="text-blue-300 font-semibold hover:underline"
+          >
             Login
           </a>
         </p>
