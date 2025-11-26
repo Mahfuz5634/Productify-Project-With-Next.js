@@ -2,6 +2,9 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
+import AuthProvider from "@/components/AuthProvider";
+import { Toaster } from "react-hot-toast";
+import { SessionProvider } from "next-auth/react";
 
 
 export const metadata = {
@@ -13,11 +16,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navbar></Navbar>
-        <div className="min-h-screen flex flex-1">
-          {children}
-        </div>
-        <Footer></Footer>
+        <AuthProvider>
+          <Navbar></Navbar>
+          <Toaster position="top-center" />
+          <div className="min-h-screen flex justify-center items-center bg-gray-100">
+            <div className="w-full flex justify-center">{children}</div>
+          </div>
+
+          <Footer></Footer>
+        </AuthProvider>
       </body>
     </html>
   );
