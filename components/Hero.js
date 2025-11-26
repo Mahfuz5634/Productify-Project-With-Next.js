@@ -12,7 +12,7 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center max-w-3xl px-6">
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
+        <h1 className=" text-gray-600 text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
           Make Your Events  
           <span className="text-blue-400"> Unforgettable 🎊</span>
         </h1>
