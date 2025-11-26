@@ -5,60 +5,80 @@ import Link from "next/link";
 import { useAuth } from "./AuthProvider";
 import { logoutUser } from "@/lib/auth";
 
+// Icons
+import {
+  Home,
+  Info,
+  Phone,
+  Calendar,
+  LogIn,
+  UserPlus,
+  LogOut,
+  Plus,
+  Settings,
+  Menu,
+  X,
+} from "lucide-react";
+
 const Navbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user } = useAuth();
 
   const profileImg =
-    user?.photoURL ||
-    "https://i.ibb.co/3T1H1dD/default-profile.png";
+    user?.photoURL || "https://i.ibb.co/3T1H1dD/default-profile.png";
 
   return (
-    <nav className="bg-blue-600 text-white sticky top-0 z-50 shadow-lg">
+    <nav className="bg-blue-600 text-white sticky top-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
 
           {/* Logo */}
-          <Link href="/" className="font-bold text-2xl tracking-wide">
-            🍿 Productify
+          <Link
+            href="/"
+            className="font-bold text-2xl tracking-wide flex items-center gap-2"
+          >
+            🍿 <span>Productify</span>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8 font-medium">
 
-            <Link href="/" className="hover:text-gray-200 transition">Home</Link>
-            <Link href="/events" className="hover:text-gray-200 transition">Events</Link>
-            <Link href="/about" className="hover:text-gray-200 transition">About</Link>
-            <Link href="/contact" className="hover:text-gray-200 transition">Contact</Link>
+            <NavItem href="/" label="Home" icon={<Home size={18} />} />
+            <NavItem href="/events" label="Events" icon={<Calendar size={18} />} />
+            <NavItem href="/about" label="About" icon={<Info size={18} />} />
+            <NavItem href="/contact" label="Contact" icon={<Phone size={18} />} />
 
-            {/* If NOT logged in */}
             {!user ? (
               <>
                 <Link
                   href="/login"
-                  className="px-3 py-1 bg-white text-blue-600 rounded-md font-semibold hover:bg-gray-200 transition"
+                  className="px-4 py-2 bg-white text-blue-600 rounded-md font-semibold hover:bg-gray-200 transition flex items-center gap-2"
                 >
-                  Login
+                  <LogIn size={18} /> Login
                 </Link>
                 <Link
                   href="/register"
-                  className="px-3 py-1 bg-white text-blue-600 rounded-md font-semibold hover:bg-gray-200 transition"
+                  className="px-4 py-2 bg-white text-blue-600 rounded-md font-semibold hover:bg-gray-200 transition flex items-center gap-2"
                 >
-                  Register
+                  <UserPlus size={18} /> Register
                 </Link>
               </>
             ) : (
               <>
-                {/* Logged In — Show Menu Items Inline */}
-                <Link href="/add-product" className="hover:text-gray-200 transition">
-                  Add Product
-                </Link>
-                <Link href="/manage-events" className="hover:text-gray-200 transition">
-                  Manage Events
-                </Link>
+                <NavItem
+                  href="/add-product"
+                  label="Add Product"
+                  icon={<Plus size={18} />}
+                />
 
-                {/* User Name */}
-                <div className="flex items-center gap-2">
+                <NavItem
+                  href="/manage-events"
+                  label="Manage"
+                  icon={<Settings size={18} />}
+                />
+
+                {/* Profile */}
+                <div className="flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full">
                   <img
                     src={profileImg}
                     alt="user"
@@ -67,12 +87,12 @@ const Navbar = () => {
                   <span className="font-semibold">{user.displayName || "User"}</span>
                 </div>
 
-                {/* Logout Button */}
+                {/* Logout */}
                 <button
                   onClick={logoutUser}
-                  className="px-3 py-1 bg-white text-blue-600 rounded-md hover:bg-gray-200 transition"
+                  className="px-4 py-2 bg-white text-blue-600 rounded-md font-semibold hover:bg-gray-200 transition flex items-center gap-2"
                 >
-                  Logout
+                  <LogOut size={18} /> Logout
                 </button>
               </>
             )}
@@ -83,23 +103,7 @@ const Navbar = () => {
             className="md:hidden"
             onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
           >
-            <svg
-              className="w-7 h-7"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d={
-                  isMobileMenuOpen
-                    ? "M6 18L18 6M6 6l12 12"
-                    : "M4 6h16M4 12h16M4 18h16"
-                }
-              />
-            </svg>
+            {isMobileMenuOpen ? <X size={30} /> : <Menu size={30} />}
           </button>
         </div>
       </div>
@@ -108,35 +112,40 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-blue-500 px-4 pb-4 space-y-2">
 
-          <Link href="/" className="block py-2 border-b border-blue-400">Home</Link>
-          <Link href="/events" className="block py-2 border-b border-blue-400">Events</Link>
-          <Link href="/about" className="block py-2 border-b border-blue-400">About</Link>
-          <Link href="/contact" className="block py-2 border-b border-blue-400">Contact</Link>
+          <MobileItem href="/" label="Home" icon={<Home size={18} />} />
+          <MobileItem href="/events" label="Events" icon={<Calendar size={18} />} />
+          <MobileItem href="/about" label="About" icon={<Info size={18} />} />
+          <MobileItem href="/contact" label="Contact" icon={<Phone size={18} />} />
 
           {!user ? (
             <>
-              <Link href="/login" className="block py-2">Login</Link>
-              <Link href="/register" className="block py-2">Register</Link>
+              <MobileItem href="/login" label="Login" icon={<LogIn size={18} />} />
+              <MobileItem href="/register" label="Register" icon={<UserPlus size={18} />} />
             </>
           ) : (
             <>
               <div className="py-2 border-t border-blue-400 flex items-center gap-3">
-                <img
-                  src={profileImg}
-                  className="w-9 h-9 rounded-full"
-                  alt="user"
-                />
+                <img src={profileImg} className="w-9 h-9 rounded-full" alt="user" />
                 <span>{user.email}</span>
               </div>
 
-              <Link href="/add-product" className="block py-2">Add Product</Link>
-              <Link href="/manage-events" className="block py-2">Manage Events</Link>
+              <MobileItem
+                href="/add-product"
+                label="Add Product"
+                icon={<Plus size={18} />}
+              />
+
+              <MobileItem
+                href="/manage-events"
+                label="Manage Events"
+                icon={<Settings size={18} />}
+              />
 
               <button
                 onClick={logoutUser}
-                className="block py-2 text-left w-full"
+                className="block py-2 text-left w-full flex items-center gap-2"
               >
-                Logout
+                <LogOut size={18} /> Logout
               </button>
             </>
           )}
@@ -147,3 +156,20 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+/* --- Reusable Components --- */
+
+const NavItem = ({ href, label, icon }) => (
+  <Link
+    href={href}
+    className="hover:text-gray-200 transition flex items-center gap-2"
+  >
+    {icon} {label}
+  </Link>
+);
+
+const MobileItem = ({ href, label, icon }) => (
+  <Link href={href} className="block py-2 border-b border-blue-400 flex items-center gap-2">
+    {icon} {label}
+  </Link>
+);

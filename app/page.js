@@ -2,6 +2,7 @@ import Features from "@/components/Features";
 import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
 import Services from "@/components/Service";
+import Home from "@/components/Somedata";
 
 export default function Page() {
   return (
@@ -11,6 +12,8 @@ export default function Page() {
          <Features></Features>
          <HowItWorks></HowItWorks>
          <Services></Services>
+         <Home></Home>
+         
       </div>
     </div>
   );
