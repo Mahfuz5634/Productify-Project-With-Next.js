@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎉 Eventify — Modern Event Management App (Next.js + MongoDB + Auth)
 
-## Getting Started
+A clean, responsive, and modern **Event Management Web App** built using **Next.js App Router**, **MongoDB**, **NextAuth**, and **TailwindCSS**.  
+Users can browse events, view details, and add new events using protected pages.
 
-First, run the development server:
+🔥 Deployed on **Vercel** | ⚡ Fast | 🎨 Beautiful UI | 🔐 Secure Authentication
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🚀 Features
+
+### 🖥 Frontend
+- ⚡ Built with **Next.js App Router**
+- 🎨 Modern UI using **TailwindCSS + ShadCN**
+- 📱 Fully **responsive** design
+- 📌 Home page with featured events
+- 🔍 Event details page with emoji-based thumbnails
+- 📝 Event creation form (Title, Description, Price, Date, Priority, Image URL)
+
+### 🔐 Authentication
+- Powered by **NextAuth.js**
+- Email/password login
+- Google OAuth
+- Protected route for event creation
+
+### 🗄 Database
+- **MongoDB Atlas**
+- Events stored with title, description, price, date, priority & icon
+- Optimized using `clientPromise`
+
+---
+
+## 📂 Project Structure
+
+```
+app/
+ ├── api/
+ │    ├── auth/route.js
+ │    └── events/route.js
+ ├── events/
+ │    └── [id]/page.js
+ ├── login/page.js
+ ├── register/page.js
+ ├── add-event/page.js
+ ├── page.js    → Homepage
+ └── layout.js
+lib/
+ ├── mongodb.js
+ └── auth.js
+components/
+ ├── Navbar.js
+ ├── EventCard.js
+ └── Footer.js
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🛠️ Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Technology | Purpose |
+|-----------|----------|
+| **Next.js 14 (App Router)** | Frontend + Server Components |
+| **MongoDB** | Database |
+| **NextAuth.js** | Authentication |
+| **TailwindCSS** | Styling |
+| **ShadCN UI** | Components |
+| **Vercel** | Deployment |
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🧪 Running the Project Locally
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 1️⃣ Clone the repo
+```bash
+git clone https://github.com/your-username/eventify.git
+cd eventify
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 2️⃣ Install dependencies
+```bash
+npm install
+```
 
-## Deploy on Vercel
+### 3️⃣ Add environment variables  
+Create a `.env.local` file:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+MONGODB_URI=your_mongo_connection_string
+NEXTAUTH_SECRET=your_secret
+NEXTAUTH_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=xxxx
+GOOGLE_CLIENT_SECRET=xxxx
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4️⃣ Run locally
+```bash
+npm run dev
+```
+
+App will run at:
+```
+http://localhost:3000
+```
+
+---
+
+## 🚀 Deployment on Vercel
+
+1. Push your project to GitHub  
+2. Go to **https://vercel.com**  
+3. Import your repository  
+4. Add environment variables under  
+   **Vercel → Project → Settings → Environment Variables**  
+5. Click **Deploy** 🎉
+
+
+
+
+
