@@ -5,7 +5,9 @@ export default function Page() {
   return (
     <div className="w-full">
       <Hero></Hero>
-      <Features></Features>
+      <div className="mt-10">
+         <Features></Features>
+      </div>
     </div>
   );
 }
