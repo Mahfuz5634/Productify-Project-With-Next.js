@@ -34,7 +34,7 @@ export default function Login() {
       await googleLogin();
       toast.success("Logged in with Google!");
 
-      setTimeout(() => router.push("/dashboard"), 800);
+      setTimeout(() => router.push("/"), 800);
     } catch (error) {
       toast.error(error.message || "Google login failed");
     }
